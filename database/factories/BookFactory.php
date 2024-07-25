@@ -1,9 +1,10 @@
 <?php
+
 namespace Database\Factories;
 
 use App\Models\Book;
-use App\Models\Author;
 use App\Models\Category;
+use App\Models\Author;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BookFactory extends Factory
@@ -13,12 +14,13 @@ class BookFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->sentence(3),
-            'category_id' => Category::factory(),
-            'author_id' => Author::factory(),
-            'average_rating' => $this->faker->numberBetween(1, 10),
-            'voter' => $this->faker->numberBetween(1, 1000),
+            'name' => $this->faker->sentence,
+            'category_id' => Category::inRandomOrder()->first()->id,
+            'author_id' => Author::inRandomOrder()->first()->id,
+            'average_rating' => Book::inrandomFloat(1, 1, 10)->id,
+            'voter' => 0, // Default 0
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }
-

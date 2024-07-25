@@ -13,8 +13,10 @@ class RatingFactory extends Factory
     public function definition()
     {
         return [
-            'book_id' => Book::factory()->create()->id, 
+            'book_id' => Book::inRandomOrder()->first()->id, // Pastikan book_id valid
             'rating' => $this->faker->numberBetween(1, 10),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }
