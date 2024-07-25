@@ -12,28 +12,50 @@
     </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Library</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('books.index') }}">Book List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('top-authors') }}">List of Authors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('books.rate') }}">Rate a Book</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <div class="container">
         <h1 class="text-center mb-4">Rate a Book</h1>
         @if ($authors->isEmpty())
             <p class="text-center">No authors found.</p>
         @else
-            <form action="{{ route('books.storeRating') }}" method="POST">
-                @csrf
+            <form action="{{ route('books.rate') }}" method="GET">
                 <div class="form-group">
                     <label for="author">Select Author</label>
                     <select id="author" class="form-control" name="author_id" required>
                         <option value="">Select an author</option>
                         @foreach ($authors as $author)
-                            <option value="{{ $author->id }}">{{ $author->name }}</option>
+                            <option value="{{ $author->id }}" {{ request('author_id') == $author->id ? 'selected' : '' }}>
+                                {{ $author->name }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
+                <button type="submit" class="btn btn-primary">Filter Books</button>
+            </form>
+
+            <form action="{{ route('books.storeRating') }}" method="POST" class="mt-4">
+                @csrf
                 <div class="form-group">
                     <label for="book">Select Book</label>
                     <select id="book" class="form-control" name="book_id" required>
                         <option value="">Select a book</option>
                         @foreach ($books as $book)
-                            <option value="{{ $book->id }}">{{ $book->name }} (Author: {{ $book->author->name }})</option>
+                            <option value="{{ $book->id }}">{{ $book->name }}</option>
                         @endforeach
                     </select>
                 </div>

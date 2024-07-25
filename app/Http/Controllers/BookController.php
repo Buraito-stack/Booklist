@@ -43,12 +43,20 @@ class BookController extends Controller
     /**
      * Show the form for rating a book.
      *
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function rate()
+    public function rate(Request $request)
     {
         $authors = Author::all();
-        $books = Book::with('author')->get();
+        
+        // Filter books based on selected author
+        $booksQuery = Book::query();
+        if ($request->has('author_id') && $request->input('author_id') != '') {
+            $booksQuery->where('author_id', $request->input('author_id'));
+        }
+
+        $books = $booksQuery->get();
 
         // Log for debugging
         Log::info('Rate book view rendered', ['author_count' => $authors->count(), 'book_count' => $books->count()]);
@@ -70,10 +78,21 @@ class BookController extends Controller
         ]);
 
         $book = Book::find($request->book_id);
-        
-        // Log for debugging
-        Log::info('Book rating stored', ['book_id' => $book->id, 'new_rating' => $book->average_rating]);
 
-        return redirect()->route('books.index');
+        // Update the book's average rating
+        $totalRatings = $book->ratings->count();
+        $sumRatings = $book->ratings->sum('rating');
+        $newAverageRating = ($sumRatings + $request->rating) / ($totalRatings + 1);
+
+        $book->average_rating = $newAverageRating;
+        $book->save();
+
+        // Log for debugging
+        Log::info('Book rating stored', [
+            'book_id' => $book->id,
+            'new_rating' => $newAverageRating,
+        ]);
+
+        return redirect()->route('books.index')->with('success', 'Rating successfully added.');
     }
 }

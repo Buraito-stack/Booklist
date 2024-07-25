@@ -7,6 +7,23 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Library</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('books.index') }}">Book List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('top-authors') }}">List of Authors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('books.rate') }}">Rate a Book</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container mt-5">
         <h1 class="text-center mb-4">Book List</h1>
         <form method="GET" action="{{ route('books.index') }}" class="mb-4">
