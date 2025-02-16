@@ -11,10 +11,9 @@ class AuthorSeeder extends Seeder
 {
     public function run()
     {
-        $faker = Faker::create(); // Inisialisasi Faker
-        $batchSize = 1000; // Ukuran batch
-        $total = 1000; // Jumlah total data
-
+        $faker = Faker::create(); 
+        $batchSize = 1000;
+        $total = 1000; 
         Log::info("Starting AuthorSeeder...");
 
         for ($i = 0; $i < $total; $i += $batchSize) {

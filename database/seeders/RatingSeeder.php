@@ -11,8 +11,8 @@ class RatingSeeder extends Seeder
 {
     public function run()
     {
-        $batchSize = 100; // Ukuran batch yang lebih kecil
-        $total = 500000;  // Total data yang akan dimasukkan
+        $batchSize = 100; 
+        $total = 500000;  
 
         DB::transaction(function () use ($batchSize, $total) {
             for ($i = 0; $i < $total; $i += $batchSize) {
@@ -20,8 +20,8 @@ class RatingSeeder extends Seeder
 
                 $ratings = $bookIds->map(function ($bookId) {
                     return [
-                        'book_id' => $bookId,
-                        'rating' => rand(1, 10),
+                        'book_id'    => $bookId,
+                        'rating'     => rand(1, 10),
                         'created_at' => now(),
                         'updated_at' => now(),
                     ];

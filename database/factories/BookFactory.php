@@ -14,13 +14,13 @@ class BookFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->sentence,
-            'category_id' => Category::inRandomOrder()->first()->id,
-            'author_id' => Author::inRandomOrder()->first()->id,
+            'name'           => $this->faker->sentence,
+            'category_id'    => Category::inRandomOrder()->first()->id,
+            'author_id'      => Author::inRandomOrder()->first()->id,
             'average_rating' => Book::inrandomFloat(1, 1, 10)->id,
-            'voter' => 0, // Default 0
-            'created_at' => now(),
-            'updated_at' => now(),
+            'voter'          => 0, 
+            'created_at'     => now(),
+            'updated_at'     => now(),
         ];
     }
 }
